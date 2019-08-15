@@ -18,10 +18,12 @@ package ch.unibas.informatik.jturtle.graphics;
 import ch.unibas.informatik.jturtle.commands.*;
 
 public interface TurtleInterpreter {
-  void interpretMove(Move move);
-  void interpretPenColor(PenColor penColor);
-  void interpretPenDown(PenDown penDown);
-  void interpretTurn(Turn turn);
-  void interpretPenUp(PenUp penUp);
-  void interpretPenSize(PenSize size);
+  void interpretMove(MoveCommand moveCommand);
+  void interpretPenColor(PenColorCommand penColorCommand);
+  void interpretPenState(PenStateCommand penStateCommand);
+  void interpretTurn(TurnCommand turnCommand);
+  void interpretPenSize(PenSizeCommand size);
+  void interpretSetPosition(SetPositionCommand setxy);
+  void interpretSetHeading(SetHeadingCommand heading);
+  void interpretCircle(CircleCommand circleCommand);
 }

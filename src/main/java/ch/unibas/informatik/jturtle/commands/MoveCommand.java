@@ -17,10 +17,10 @@ package ch.unibas.informatik.jturtle.commands;
 
 import ch.unibas.informatik.jturtle.graphics.TurtleInterpreter;
 
-public class Move implements TurtleCommand {
+public class MoveCommand implements TurtleCommand {
   private long distance = 0;
 
-  public Move(long distance) {
+  public MoveCommand(long distance) {
     this.distance = distance;
   }
 

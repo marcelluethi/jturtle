@@ -17,14 +17,19 @@ package ch.unibas.informatik.jturtle.commands;
 
 import ch.unibas.informatik.jturtle.graphics.TurtleInterpreter;
 
-public class PenUp implements TurtleCommand {
-  public PenUp() {}
+public class PenSizeCommand implements TurtleCommand {
+  private int size = 1;
+
+  public PenSizeCommand(int size){
+    this.size = size;
+  }
+
+  public int getSize() {
+    return this.size;
+  }
 
   @Override
   public void interpret(TurtleInterpreter interpreter) {
-    interpreter.interpretPenUp(this);
+    interpreter.interpretPenSize(this);
   }
-
-
-
 }

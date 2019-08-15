@@ -26,45 +26,63 @@ public class Example {
   public static void main(String[] args) throws Exception {
 
     Turtle t = new Turtle();
-    //t.penDown();
-    t.penColor(Color.BLUE);
-    t.penSize(1);
+//    t.penDown();
+//    t.penColor(Color.BLUE);
+//    t.penSize(1);
+//
+//    int length = 200;
+//
+//    t.forward(length / 2); ;
+//    t.penColor(Color.RED);
+//    t.turn(90);
+//    t.forward(length / 2);
+//    t.penDown();
+//    t.turn(90);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
+//
+//    // second square
+//    t.penDown();
+//    t.penColor(Color.BLACK);
+//    t.turn(90);
+//    t.forward(length / 2);
+//    t.turn(-90);
+//    long diag = Math.round(Math.sqrt(length * length + length * length));
+//    t.forward((int) (diag - length) / 2);
+//
+//    t.penDown();
+//    t.turn(135);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
+//    t.turn(90);
+//    t.forward(length);
 
-    int length = 200;
 
-    t.move(length / 2); ;
-    t.penColor(Color.RED);
-    t.turn(90);
-    t.move(length / 2);
-    t.penDown();
-    t.turn(90);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
-
-    // second square
+    t.home();
     t.penDown();
     t.penColor(Color.BLACK);
-    t.turn(90);
-    t.move(length / 2);
-    t.turn(-90);
-    long diag = Math.round(Math.sqrt(length * length + length * length));
-    t.move((diag - length) / 2);
+//    t.forward(100);
+//    t.penColor(Color.BLUE);
+//    t.turn(90);
+//    t.forward(100);
 
     t.penDown();
-    t.turn(135);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
-    t.turn(90);
-    t.move(length);
 
+    //
+//    for (int i = 0; i < 700; i++) {
+//      t.forward(1);
+//      t.turn(0.5);
+//    }
+
+    t.circle(100);
     BufferedImage image = t.toImage();
     ImageIO.write(image, "png", new File("image.png"));
   }

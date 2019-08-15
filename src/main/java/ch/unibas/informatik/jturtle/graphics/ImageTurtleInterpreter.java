@@ -29,10 +29,9 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   private static final int HEIGHT = 512;
 
   private boolean isPenDown = false;
-  private Point currentPosition = new Point(WIDTH / 2, HEIGHT / 2);
-  private Color penColor = Color.BLACK;
-  private double angleRad = 0.0;
-  private int penSize = 1;
+  private Point currentPosition = new Point(0, 0);
+  private double angleDegree = 0.0;
+
 
 
   private BufferedImage image =  new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -48,49 +47,70 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
 
 
   @Override
-  public void interpretMove(Move move) {
+  public void interpretMove(MoveCommand moveCommand) {
 
     // computing new point position
-    long newX = Math.round(currentPosition.getX() + Math.sin(angleRad) * move.getDistance());
-    long newY = Math.round(currentPosition.getY() - Math.cos(angleRad) * move.getDistance());
-
+    long newX = Math.round(currentPosition.getX() + Math.sin(degreeToRad(angleDegree)) * moveCommand.getDistance());
+    long newY = Math.round(currentPosition.getY() - Math.cos(degreeToRad(angleDegree)) * moveCommand.getDistance());
     Point newPosition = new Point((int) newX, (int) newY);
+
+    Point startPosInWindow = turtleToImageCoordinate(currentPosition);
+    Point endPosInWindow = turtleToImageCoordinate(newPosition);
+
     Point newDrawingEndPoint = pointInCanvas(newPosition);
-    graphics.setColor(penColor);
-    graphics.setStroke(new BasicStroke(penSize));
 
     if (isPenDown) {
-      graphics.drawLine(currentPosition.getX(), currentPosition.getY(), newDrawingEndPoint.getX(), newDrawingEndPoint.getY());
+      graphics.drawLine(startPosInWindow.getX(), startPosInWindow.getY(), endPosInWindow.getX(), endPosInWindow.getY());
     }
 
     currentPosition = newPosition;
   }
 
   @Override
-  public void interpretPenColor(PenColor pencolor) {penColor = pencolor.getPenColor();}
-
-  @Override
-  public void interpretPenDown(PenDown penDown) {
-    isPenDown = true;
+  public void interpretPenColor(PenColorCommand pencolor) {
+    graphics.setColor(pencolor.getPenColor());
   }
 
   @Override
-  public void interpretPenUp(PenUp penUp) {
-    isPenDown = false;
+  public void interpretPenState(PenStateCommand penStateCommand) {
+    isPenDown = penStateCommand.isPenDown();
+  }
+
+
+  @Override
+  public void interpretPenSize(PenSizeCommand penSizeCommand) {
+    graphics.setStroke(new BasicStroke(penSizeCommand.getSize()));
   }
 
   @Override
-  public void interpretPenSize(PenSize penSize) {
-    this.penSize = penSize.getSize();
+  public void interpretSetPosition(SetPositionCommand pos) {
+
+    this.currentPosition = pos.getPosition();
   }
 
   @Override
-  public void interpretTurn(Turn turn) {
+  public void interpretSetHeading(SetHeadingCommand heading) {
+    this.angleDegree = heading.getAngle();
+  }
+
+  @Override
+  public void interpretTurn(TurnCommand turnCommand) {
     // turn clockwise
-    this.angleRad = (this.angleRad + degreeToRad(turn.getAngle())) % (2.0 * Math.PI);
+    this.angleDegree = clampAngle(this.angleDegree + turnCommand.getAngle());
   }
 
-
+  @Override
+  public void interpretCircle(CircleCommand cmd) {
+    if (isPenDown) {
+      Point posInImageCoordinates = turtleToImageCoordinate(this.currentPosition);
+      graphics.drawOval(
+          posInImageCoordinates.getX() - cmd.getRadius() ,
+          posInImageCoordinates.getY() - cmd.getRadius() ,
+          cmd.getRadius() * 2,
+          cmd.getRadius() * 2
+      );
+    }
+  }
 
   private static double degreeToRad(double degree) {
     return degree / 360.0 * Math.PI * 2.0;
@@ -103,4 +123,16 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     return new Point(x, y);
   }
 
+  private Point turtleToImageCoordinate(Point point) {
+    return new Point(point.getX() + WIDTH / 2, point.getY() + HEIGHT / 2);
+  }
+
+  private double clampAngle(double angle) {
+    double sanitizedAngle = ((angle % 360) + 360) % 360 ;
+
+    if (sanitizedAngle > 180)
+      return sanitizedAngle;
+    else
+      return sanitizedAngle - 360;
+  }
 }

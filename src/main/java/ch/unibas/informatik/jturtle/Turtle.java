@@ -30,22 +30,35 @@ public class Turtle {
   }
 
   public void penDown() {
-    this.commands.addLast(new PenDown());
+    this.commands.addLast(new PenStateCommand(true));
   }
 
-  public void penUp() { this.commands.addLast(new PenUp());}
+  public void penUp() { this.commands.addLast(new PenStateCommand(false));}
 
-  public void move(long distance) {
-    this.commands.addLast(new Move(distance));
+  public void forward(int distance) {
+    this.commands.addLast(new MoveCommand(distance));
+  }
+
+  public void backward(int distance) {
+    this.commands.addLast(new MoveCommand(-distance));
+  }
+
+  public void home() {
+    this.commands.addLast(new SetPositionCommand(0, 0));
+    this.commands.addLast(new SetHeadingCommand(0));
   }
 
   public void turn(double angle) {
-    this.commands.addLast(new Turn(angle));
+    this.commands.addLast(new TurnCommand(angle));
   }
 
-  public void penColor(Color color) {this.commands.addLast(new PenColor(color));}
+  public void circle(int radius) {
+    this.commands.addLast(new CircleCommand(radius));
+  }
 
-  public void penSize(int size) {this.commands.addLast(new PenSize(size)); }
+  public void penColor(Color color) {this.commands.addLast(new PenColorCommand(color));}
+
+  public void penSize(int size) {this.commands.addLast(new PenSizeCommand(size)); }
 
   public BufferedImage toImage() {
     ImageTurtleInterpreter interpreter = new ImageTurtleInterpreter();

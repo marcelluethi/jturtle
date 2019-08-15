@@ -17,19 +17,20 @@ package ch.unibas.informatik.jturtle.commands;
 
 import ch.unibas.informatik.jturtle.graphics.TurtleInterpreter;
 
-public class PenSize implements TurtleCommand {
-  private int size = 1;
+public class TurnCommand implements TurtleCommand {
 
-  public PenSize(int size){
-    this.size = size;
+  private double angle = 0;
+
+  public TurnCommand(double angle) {
+    this.angle = angle;
   }
 
-  public int getSize() {
-    return this.size;
+  public double getAngle() {
+    return angle;
   }
 
   @Override
   public void interpret(TurtleInterpreter interpreter) {
-    interpreter.interpretPenSize(this);
+    interpreter.interpretTurn(this);
   }
 }

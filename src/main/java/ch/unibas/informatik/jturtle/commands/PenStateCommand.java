@@ -16,21 +16,22 @@
 package ch.unibas.informatik.jturtle.commands;
 
 import ch.unibas.informatik.jturtle.graphics.TurtleInterpreter;
-import java.awt.*;
 
-public class PenColor implements TurtleCommand {
-  private Color penColor = Color.BLACK;
+public class PenStateCommand implements TurtleCommand {
+  boolean penDown = false;
 
-  public PenColor(Color penColor){
-    this.penColor = penColor;
+  public PenStateCommand(boolean penDown) {
+    this.penDown = penDown;
   }
 
-  public Color getPenColor() {
-    return penColor;
-  }
+  public boolean isPenDown() { return this.penDown; }
+  public boolean isPenUp() { return this.isPenUp(); }
 
   @Override
   public void interpret(TurtleInterpreter interpreter) {
-    interpreter.interpretPenColor(this);
+    interpreter.interpretPenState(this);
   }
+
+
+
 }
