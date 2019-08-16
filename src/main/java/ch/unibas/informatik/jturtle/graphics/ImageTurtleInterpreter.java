@@ -25,8 +25,9 @@ import java.util.List;
 
 public class ImageTurtleInterpreter implements TurtleInterpreter {
 
-  private static final int WIDTH = 512;
-  private static final int HEIGHT = 512;
+  private static final int WIDTH = 1024;
+  private static final int HEIGHT = 1024 ;
+
 
   private boolean isPenDown = false;
   private Point currentPosition = new Point(0, 0);
@@ -50,14 +51,12 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   public void interpretMove(MoveCommand moveCommand) {
 
     // computing new point position
-    long newX = Math.round(currentPosition.getX() + Math.sin(degreeToRad(angleDegree)) * moveCommand.getDistance());
-    long newY = Math.round(currentPosition.getY() - Math.cos(degreeToRad(angleDegree)) * moveCommand.getDistance());
-    Point newPosition = new Point((int) newX, (int) newY);
+    double newX = currentPosition.getX() + Math.sin(degreeToRad(angleDegree)) * moveCommand.getDistance();
+    double newY = currentPosition.getY() - Math.cos(degreeToRad(angleDegree)) * moveCommand.getDistance();
+    Point newPosition = new Point(newX, newY);
 
-    Point startPosInWindow = turtleToImageCoordinate(currentPosition);
-    Point endPosInWindow = turtleToImageCoordinate(newPosition);
-
-    Point newDrawingEndPoint = pointInCanvas(newPosition);
+    ScreenPoint startPosInWindow = turtleToImageCoordinate(currentPosition);
+    ScreenPoint endPosInWindow = turtleToImageCoordinate(newPosition);
 
     if (isPenDown) {
       graphics.drawLine(startPosInWindow.getX(), startPosInWindow.getY(), endPosInWindow.getX(), endPosInWindow.getY());
@@ -96,43 +95,34 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   @Override
   public void interpretTurn(TurnCommand turnCommand) {
     // turn clockwise
-    this.angleDegree = clampAngle(this.angleDegree + turnCommand.getAngle());
-  }
-
-  @Override
-  public void interpretCircle(CircleCommand cmd) {
-    if (isPenDown) {
-      Point posInImageCoordinates = turtleToImageCoordinate(this.currentPosition);
-      graphics.drawOval(
-          posInImageCoordinates.getX() - cmd.getRadius() ,
-          posInImageCoordinates.getY() - cmd.getRadius() ,
-          cmd.getRadius() * 2,
-          cmd.getRadius() * 2
-      );
-    }
+    this.angleDegree = normalizeAngle(this.angleDegree + turnCommand.getAngle());
   }
 
   private static double degreeToRad(double degree) {
     return degree / 360.0 * Math.PI * 2.0;
   }
 
-  private Point pointInCanvas(Point point) {
+  private ScreenPoint pointInCanvas(ScreenPoint point) {
 
     int x = Math.max(0, Math.min(WIDTH, point.getX()));
     int y = Math.max(0, Math.min(HEIGHT, point.getY()));
-    return new Point(x, y);
+    return new ScreenPoint(x, y);
   }
 
-  private Point turtleToImageCoordinate(Point point) {
-    return new Point(point.getX() + WIDTH / 2, point.getY() + HEIGHT / 2);
+  private ScreenPoint turtleToImageCoordinate(Point point) {
+    double scaleFactorX = WIDTH / Turtle.CANVAS_SIZE_X;
+    double scaleFactorY = HEIGHT / Turtle.CANVAS_SIZE_Y;
+    return new ScreenPoint(
+        (int) Math.round(point.getX() * scaleFactorX + WIDTH / 2) ,
+        (int) Math.round(point.getY() * scaleFactorY + HEIGHT / 2) );
   }
 
-  private double clampAngle(double angle) {
-    double sanitizedAngle = ((angle % 360) + 360) % 360 ;
+  private double normalizeAngle(double angle) {
+    double normalizedAngle = ((angle % 360) + 360) % 360 ;
 
-    if (sanitizedAngle > 180)
-      return sanitizedAngle;
+    if (normalizedAngle > 180)
+      return normalizedAngle;
     else
-      return sanitizedAngle - 360;
+      return normalizedAngle - 360;
   }
 }

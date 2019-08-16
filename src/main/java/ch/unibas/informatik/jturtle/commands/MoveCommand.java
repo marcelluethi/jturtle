@@ -18,13 +18,13 @@ package ch.unibas.informatik.jturtle.commands;
 import ch.unibas.informatik.jturtle.graphics.TurtleInterpreter;
 
 public class MoveCommand implements TurtleCommand {
-  private long distance = 0;
+  private double distance = 0;
 
-  public MoveCommand(long distance) {
+  public MoveCommand(double distance) {
     this.distance = distance;
   }
 
-  public long getDistance() { return this.distance; }
+  public double getDistance() { return this.distance; }
 
   @Override
   public void interpret(TurtleInterpreter interpreter) {

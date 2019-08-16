@@ -23,6 +23,10 @@ import java.util.LinkedList;
 import java.awt.*;
 
 public class Turtle {
+
+  public static final int CANVAS_SIZE_X = 200;
+  public static final int CANVAS_SIZE_Y = 200;
+
   private LinkedList<TurtleCommand> commands = null;
 
   public Turtle() {
@@ -35,11 +39,11 @@ public class Turtle {
 
   public void penUp() { this.commands.addLast(new PenStateCommand(false));}
 
-  public void forward(int distance) {
+  public void forward(double distance) {
     this.commands.addLast(new MoveCommand(distance));
   }
 
-  public void backward(int distance) {
+  public void backward(double distance) {
     this.commands.addLast(new MoveCommand(-distance));
   }
 
@@ -50,10 +54,6 @@ public class Turtle {
 
   public void turn(double angle) {
     this.commands.addLast(new TurnCommand(angle));
-  }
-
-  public void circle(int radius) {
-    this.commands.addLast(new CircleCommand(radius));
   }
 
   public void penColor(Color color) {this.commands.addLast(new PenColorCommand(color));}

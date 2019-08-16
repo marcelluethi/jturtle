@@ -26,53 +26,58 @@ public class Example {
   public static void main(String[] args) throws Exception {
 
     Turtle t = new Turtle();
-//    t.penDown();
-//    t.penColor(Color.BLUE);
-//    t.penSize(1);
-//
-//    int length = 200;
-//
-//    t.forward(length / 2); ;
-//    t.penColor(Color.RED);
-//    t.turn(90);
-//    t.forward(length / 2);
-//    t.penDown();
-//    t.turn(90);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
-//
-//    // second square
-//    t.penDown();
-//    t.penColor(Color.BLACK);
-//    t.turn(90);
-//    t.forward(length / 2);
-//    t.turn(-90);
-//    long diag = Math.round(Math.sqrt(length * length + length * length));
-//    t.forward((int) (diag - length) / 2);
-//
-//    t.penDown();
-//    t.turn(135);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
-//    t.turn(90);
-//    t.forward(length);
+    t.penDown();
+    t.penColor(Color.BLUE);
+    t.penSize(1);
+
+    int length = 100;
+
+    t.forward(length / 2); ;
+    t.penColor(Color.RED);
+    t.turn(90);
+    t.forward(length / 2);
+    t.penDown();
+    t.turn(90);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
+
+    // second square
+    t.penDown();
+    t.penColor(Color.BLACK);
+    t.turn(90);
+    t.forward(length / 2);
+    t.turn(-90);
+    long diag = Math.round(Math.sqrt(length * length + length * length));
+    t.forward((int) (diag - length) / 2);
+
+    t.penDown();
+    t.turn(135);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
+    t.turn(90);
+    t.forward(length);
 
 
     t.home();
     t.penDown();
     t.penColor(Color.BLACK);
-//    t.forward(100);
-//    t.penColor(Color.BLUE);
-//    t.turn(90);
-//    t.forward(100);
+
+    int radius = 10;
+      for (int i = 0; i < 360; i++) {
+        double dist =  (2.0 * 3.14159 * radius / 360.0);
+        System.out.println(dist);
+        t.forward( dist );
+        t.turn(1);
+      }
+
 
     t.penDown();
 
@@ -82,7 +87,6 @@ public class Example {
 //      t.turn(0.5);
 //    }
 
-    t.circle(100);
     BufferedImage image = t.toImage();
     ImageIO.write(image, "png", new File("image.png"));
   }

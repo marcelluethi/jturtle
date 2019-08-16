@@ -16,14 +16,15 @@
 package ch.unibas.informatik.jturtle.common;
 
 public class Point {
-  int x = 0;
-  int y = 0;
+  double x = 0;
+  double y = 0;
 
-  public Point(int x, int y) {
+  public Point(double x, double y) {
     this.x = x;
     this.y = y;
   }
 
-  public int getX() { return x; }
-  public int getY() { return y; }
+  public double getX() { return x; }
+  public double getY() { return y; }
 }
+
