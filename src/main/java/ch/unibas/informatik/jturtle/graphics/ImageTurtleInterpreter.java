@@ -35,9 +35,16 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
 
 
 
-  private BufferedImage image =  new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-  private Graphics2D graphics = image.createGraphics();
+  private BufferedImage image =  null;
+  private Graphics2D graphics = null;
 
+
+  public ImageTurtleInterpreter()  {
+    this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    this.graphics = image.createGraphics();
+    graphics.setStroke(new BasicStroke(1));
+    graphics.setColor(Color.BLACK);
+  }
 
   public BufferedImage runTurtle(Turtle turtle, List<TurtleCommand> commands) {
     for (TurtleCommand command : commands) {
