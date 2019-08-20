@@ -52,8 +52,11 @@ public class Turtle {
     this.commands.addLast(new SetHeadingCommand(0));
   }
 
-  public void turn(double angle) {
+  public void turnRight(double angle) {
     this.commands.addLast(new TurnCommand(angle));
+  }
+  public void turnLeft(double angle) {
+    this.commands.addLast(new TurnCommand(-angle));
   }
 
   public void penColor(Color color) {this.commands.addLast(new PenColorCommand(color));}
