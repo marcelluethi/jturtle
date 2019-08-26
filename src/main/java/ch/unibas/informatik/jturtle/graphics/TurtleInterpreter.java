@@ -18,6 +18,7 @@ package ch.unibas.informatik.jturtle.graphics;
 import ch.unibas.informatik.jturtle.commands.*;
 
 public interface TurtleInterpreter {
+  void interpretClear(ClearCommand clearDommand);
   void interpretMove(MoveCommand moveCommand);
   void interpretPenColor(PenColorCommand penColorCommand);
   void interpretPenState(PenStateCommand penStateCommand);

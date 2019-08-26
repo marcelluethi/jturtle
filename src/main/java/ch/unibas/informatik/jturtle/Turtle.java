@@ -33,6 +33,8 @@ public class Turtle {
     this.commands = new LinkedList<>();
   }
 
+  public void clear() { this.commands.addLast(new ClearCommand()); }
+
   public void penDown() {
     this.commands.addLast(new PenStateCommand(true));
   }

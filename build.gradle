@@ -23,7 +23,7 @@ plugins {
 
 group = 'ch.unibas.informatik.jturtle'
 
-version = '0.3'
+version = '0.4'
 
 
 repositories {
@@ -74,7 +74,7 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = "https://github.com/marcelluethi/jturtle.git"
         version {
-            name = "v$version"
+            name = "v0.4"
             desc = 'turtle graphics library used for introductory programming'
         }
     }

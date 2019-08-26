@@ -23,63 +23,36 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Example {
+
+  static void circle(Turtle t, int radius, int x, int y) {
+    // go to center
+    t.home();
+    t.penDown();
+
+    //
+    for (int i = 0; i < 360; i++) {
+      double dist = Math.round (2.0 * 3.14159 * radius / 360.0);
+      t.forward( dist );
+      t.turnRight(1);
+    }
+  }
+
   public static void main(String[] args) throws Exception {
 
     Turtle t = new Turtle();
     t.penDown();
-    t.penColor(Color.BLUE);
-    t.penSize(1);
-
-    int length = 100;
-
-    t.forward(length / 2); ;
-    t.penColor(Color.RED);
-    t.turn(90);
-    t.forward(length / 2);
-    t.penDown();
-    t.turn(90);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-
-    // second square
-    t.penDown();
-    t.penColor(Color.BLACK);
-    t.turn(90);
-    t.forward(length / 2);
-    t.turn(-90);
-    long diag = Math.round(Math.sqrt(length * length + length * length));
-    t.forward((int) (diag - length) / 2);
-
-    t.penDown();
-    t.turn(135);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-    t.turn(90);
-    t.forward(length);
-
-
-    t.home();
-    t.penDown();
-    t.penColor(Color.BLACK);
-
     int radius = 10;
       for (int i = 0; i < 360; i++) {
         double dist =  (2.0 * 3.14159 * radius / 360.0);
         System.out.println(dist);
         t.forward( dist );
-        t.turn(1);
+        t.turnRight(1);
       }
 
 
-    t.penDown();
+    t.clear();
+      t.penDown();
+      t.forward(100);
 
     //
 //    for (int i = 0; i < 700; i++) {

@@ -40,10 +40,7 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
 
 
   public ImageTurtleInterpreter()  {
-    this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-    this.graphics = image.createGraphics();
-    graphics.setStroke(new BasicStroke(1));
-    graphics.setColor(Color.BLACK);
+    this.initialize();
   }
 
   public BufferedImage runTurtle(Turtle turtle, List<TurtleCommand> commands) {
@@ -53,6 +50,11 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     return image;
   }
 
+
+  @Override
+  public void interpretClear(ClearCommand clearDommand) {
+    this.initialize();
+  }
 
   @Override
   public void interpretMove(MoveCommand moveCommand) {
@@ -114,6 +116,16 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     int x = Math.max(0, Math.min(WIDTH, point.getX()));
     int y = Math.max(0, Math.min(HEIGHT, point.getY()));
     return new ScreenPoint(x, y);
+  }
+
+  private void initialize() {
+    this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    this.graphics = image.createGraphics();
+    graphics.setStroke(new BasicStroke(1));
+    graphics.setColor(Color.BLACK);
+    this.currentPosition = new Point(0 ,0);
+    this.angleDegree = 0;
+
   }
 
   private ScreenPoint turtleToImageCoordinate(Point point) {
