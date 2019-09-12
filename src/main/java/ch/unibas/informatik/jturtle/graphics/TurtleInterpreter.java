@@ -26,4 +26,5 @@ public interface TurtleInterpreter {
   void interpretPenSize(PenSizeCommand size);
   void interpretSetPosition(SetPositionCommand setxy);
   void interpretSetHeading(SetHeadingCommand heading);
+  void interpretFill(FillCommand fillCommand);
 }

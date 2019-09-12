@@ -21,6 +21,7 @@ import ch.unibas.informatik.jturtle.common.Point;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ImageTurtleInterpreter implements TurtleInterpreter {
@@ -32,7 +33,8 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   private boolean isPenDown = false;
   private Point currentPosition = new Point(0, 0);
   private double angleDegree = 0.0;
-
+  private Color penColor = Color.BLACK;
+  private int penSize = 1;
 
 
   private BufferedImage image =  null;
@@ -68,6 +70,8 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     ScreenPoint endPosInWindow = turtleToImageCoordinate(newPosition);
 
     if (isPenDown) {
+      graphics.setColor(this.penColor);
+      graphics.setStroke(new BasicStroke(this.penSize));
       graphics.drawLine(startPosInWindow.getX(), startPosInWindow.getY(), endPosInWindow.getX(), endPosInWindow.getY());
     }
 
@@ -75,8 +79,8 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   }
 
   @Override
-  public void interpretPenColor(PenColorCommand pencolor) {
-    graphics.setColor(pencolor.getPenColor());
+  public void interpretPenColor(PenColorCommand penColorCommand) {
+    this.penColor = penColorCommand.getPenColor();
   }
 
   @Override
@@ -87,7 +91,7 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
 
   @Override
   public void interpretPenSize(PenSizeCommand penSizeCommand) {
-    graphics.setStroke(new BasicStroke(penSizeCommand.getSize()));
+    this.penSize = penSizeCommand.getSize();
   }
 
   @Override
@@ -100,6 +104,39 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
   public void interpretSetHeading(SetHeadingCommand heading) {
     this.angleDegree = heading.getAngle();
   }
+
+  @Override
+  public void interpretFill(FillCommand fillCommand) {
+    ScreenPoint screenPoint = turtleToImageCoordinate(this.currentPosition);
+
+    int colorToFill = this.image.getRGB(screenPoint.x, screenPoint.y);
+
+    // in case the current color corresponds to the one we stand at, there is nothing to do,
+    // as filling would only color all pixels which anyway have this color.
+    if (colorToFill == this.penColor.getRGB()) { return; }
+
+    LinkedList<ScreenPoint> q = new LinkedList<ScreenPoint>();
+    q.addLast(screenPoint);
+    while (!q.isEmpty()) {
+      ScreenPoint position = q.removeFirst();
+
+      if ((position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT) &&
+          this.image.getRGB(position.x, position.y) == colorToFill) {
+
+        this.image.setRGB(position.x, position.y, this.penColor.getRGB());
+
+        for (int i = -1; i <= 1; i++) {
+          for (int j = -1; j <= 1; j++) {
+            if (i != 0 || j != 0) {
+              q.addLast(new ScreenPoint(position.x + i, position.y + j));
+            }
+          }
+        }
+
+      }
+    }
+  }
+
 
   @Override
   public void interpretTurn(TurnCommand turnCommand) {
@@ -122,10 +159,13 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     this.graphics = image.createGraphics();
     graphics.setStroke(new BasicStroke(1));
-    graphics.setColor(Color.BLACK);
+    this.penColor = Color.BLACK;
+    this.penSize = 1;
     this.currentPosition = new Point(0 ,0);
     this.angleDegree = 0;
-
+    // set the background to white
+    this.graphics.setColor(Color.WHITE);
+    this.graphics.fillRect(0, 0, WIDTH, HEIGHT);
   }
 
   private ScreenPoint turtleToImageCoordinate(Point point) {

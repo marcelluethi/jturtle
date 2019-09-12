@@ -65,6 +65,8 @@ public class Turtle {
 
   public void penSize(int size) {this.commands.addLast(new PenSizeCommand(size)); }
 
+  public void fill() { this.commands.addLast(new FillCommand());}
+
   public BufferedImage toImage() {
     ImageTurtleInterpreter interpreter = new ImageTurtleInterpreter();
     return interpreter.runTurtle(this, commands);
