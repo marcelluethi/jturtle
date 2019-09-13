@@ -72,21 +72,26 @@ public class Example {
 
     boolean[][] twoDArray = new boolean[40][40];
 
-    for (int i = 0; i < twoDArray.length; i++) {
-      double x = (i - twoDArray.length / 2.0) / 15.0;
-      for (int j = 0; j < twoDArray[i].length; j++) {
-        double y = (j - twoDArray[i].length / 2.0) / 15.0 ;
-        boolean res = (x * x + y * y - 1) * (x * x + y * y - 1) * (x * x + y * y - 1) - (x * x * y * y * y) <= 0;
-        if (res ) {
-          twoDArray[i][j] = true;
-        } else {
-          twoDArray[i][j] = false;
-        }
-      }
-    }
+//    for (int i = 0; i < twoDArray.length; i++) {
+//      double x = (i - twoDArray.length / 2.0) / 15.0;
+//      for (int j = 0; j < twoDArray[i].length; j++) {
+//        double y = (j - twoDArray[i].length / 2.0) / 15.0 ;
+//        boolean res = (x * x + y * y - 1) * (x * x + y * y - 1) * (x * x + y * y - 1) - (x * x * y * y * y) <= 0;
+//        if (res ) {
+//          twoDArray[i][j] = true;
+//        } else {
+//          twoDArray[i][j] = false;
+//        }
+//      }
+//    }
+//
+//    drawImage(t, twoDArray);
 
-    drawImage(t, twoDArray);
-
+    t.penDown();
+    t.penColor(Color.BLACK);
+    t.write("Hallo", 50);
+    t.forward(10);
+    t.write("Welt", 50);
     BufferedImage image = t.toImage();
     ImageIO.write(image, "png", new File("image.png"));
   }

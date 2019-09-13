@@ -65,6 +65,8 @@ public class Turtle {
 
   public void penSize(int size) {this.commands.addLast(new PenSizeCommand(size)); }
 
+  public void write(String text, int fontSize) { this.commands.addLast(new WriteTextCommand(text, fontSize));}
+
   public void fill() { this.commands.addLast(new FillCommand());}
 
   public BufferedImage toImage() {

@@ -27,4 +27,5 @@ public interface TurtleInterpreter {
   void interpretSetPosition(SetPositionCommand setxy);
   void interpretSetHeading(SetHeadingCommand heading);
   void interpretFill(FillCommand fillCommand);
+  void interpretWriteText(WriteTextCommand writeTextCommand);
 }

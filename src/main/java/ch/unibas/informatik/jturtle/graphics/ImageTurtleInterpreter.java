@@ -137,6 +137,17 @@ public class ImageTurtleInterpreter implements TurtleInterpreter {
     }
   }
 
+  @Override
+  public void interpretWriteText(WriteTextCommand writeTextCommand) {
+    ScreenPoint sp = turtleToImageCoordinate(this.currentPosition);
+    String text = writeTextCommand.getText();
+    int fontSize  = writeTextCommand.getFontSize();
+    graphics.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+    graphics.setColor(this.penColor);
+    graphics.drawString(text, sp.getX(), sp.getY());
+
+  }
+
 
   @Override
   public void interpretTurn(TurnCommand turnCommand) {
