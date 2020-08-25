@@ -15,84 +15,28 @@
  */
 package ch.unibas.informatik.jturtle.app;
 
-import ch.unibas.informatik.jturtle.Turtle;
+import static ch.unibas.informatik.jturtle.TurtleCommands.*;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
+import java.io.IOException;
 
 public class Example {
+  public static void main(String[] args) throws IOException {
 
-  static void drawPixel(Turtle t, boolean filled) {
-    int pixelWidth = 2;
-    t.penDown();
-    t.forward(pixelWidth);
-    t.turnRight(90);
-    t.forward(pixelWidth);
-    t.turnRight(90);
-    t.forward(pixelWidth);
-    t.turnRight(90);
-    t.forward(pixelWidth);
-    t.turnRight(90);
-    t.penUp();
+    clear();
+    home();
+    penColor(GREEN);
+    forward(100);
+    turnRight(90);
+    penColor(color(128, 128, 128));
+    forward(100);
+    turnRight(90);
+    penSize(10);
+    forward(100);
+    //display(drawing());
 
-    if (filled) {
-      t.forward(pixelWidth / 2);
-      t.turnRight(90);
-      t.forward(pixelWidth / 2);
-      t.fill();
-      t.backward(pixelWidth / 2);
-      t.turnLeft(90);
-      t.backward(pixelWidth / 2);
-    }
-    t.forward(2);
-    t.penDown();
-
-  }
-
-
-  public static void drawImage(Turtle t, boolean[][] image) {
-    for (int i = 0; i < image.length; i++) {
-      for (int j = 0; j < image.length; j++) {
-        drawPixel(t, image[i][j] );
-      }
-      t.penUp();
-      t.backward(image.length * 2);
-      t.turnRight(90); t.forward(2);
-      t.turnLeft(90);
-      t.penDown();
-
-    }
-  }
-
-  public static void main(String[] args) throws Exception {
-
-    Turtle t = new Turtle();
-
-    boolean[][] twoDArray = new boolean[40][40];
-
-//    for (int i = 0; i < twoDArray.length; i++) {
-//      double x = (i - twoDArray.length / 2.0) / 15.0;
-//      for (int j = 0; j < twoDArray[i].length; j++) {
-//        double y = (j - twoDArray[i].length / 2.0) / 15.0 ;
-//        boolean res = (x * x + y * y - 1) * (x * x + y * y - 1) * (x * x + y * y - 1) - (x * x * y * y * y) <= 0;
-//        if (res ) {
-//          twoDArray[i][j] = true;
-//        } else {
-//          twoDArray[i][j] = false;
-//        }
-//      }
-//    }
-//
-//    drawImage(t, twoDArray);
-
-    t.penDown();
-    t.penColor(Color.BLACK);
-    t.write("Hallo", 50);
-    t.forward(10);
-    t.write("Welt", 50);
-    BufferedImage image = t.toImage();
-    ImageIO.write(image, "png", new File("image.png"));
+    //clear();
+    ImageIO.write(drawing(), "png", new java.io.File("image.png"));
   }
 }

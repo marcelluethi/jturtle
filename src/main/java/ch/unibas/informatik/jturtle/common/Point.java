@@ -24,7 +24,20 @@ public class Point {
     this.y = y;
   }
 
+  public Point plus(Vector v) {
+    return new Point(this.x + v.x, this.y + v.y);
+  }
+
   public double getX() { return x; }
   public double getY() { return y; }
+
+
+  /**
+   * Return a string representation of the point. Useful for printing
+   * it out onto the console.
+   */
+  public String toString() {
+    return "(" + x + ", " + y + ")";
+  }
 }
 

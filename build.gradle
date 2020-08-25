@@ -75,7 +75,7 @@ bintray {
         vcsUrl = "https://github.com/marcelluethi/jturtle.git"
         version {
             name = "v0.5"
-            desc = 'turtle graphics library used for introductory programming'
+            desc = 'turtle views library used for introductory programming'
         }
     }
 }

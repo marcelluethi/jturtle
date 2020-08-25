@@ -1,4 +1,4 @@
-package ch.unibas.informatik.jturtle.graphics;
+package ch.unibas.informatik.jturtle.views;
 
 public class ScreenPoint {
   int x = 0;
