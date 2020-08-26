@@ -23,7 +23,7 @@ plugins {
 
 group = 'ch.unibas.informatik.jturtle'
 
-version = '0.5'
+version = '0.6'
 
 
 repositories {
@@ -56,10 +56,12 @@ publishing {
             artifact javadocJar
             groupId "ch.unibas.informatik"
             artifactId "jturtle"
-            version 0.5
+            version 0.6
         }
     }
 }
+
+
 
 
 
@@ -74,7 +76,7 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = "https://github.com/marcelluethi/jturtle.git"
         version {
-            name = "v0.5"
+            name = "v0.6"
             desc = 'turtle views library used for introductory programming'
         }
     }
