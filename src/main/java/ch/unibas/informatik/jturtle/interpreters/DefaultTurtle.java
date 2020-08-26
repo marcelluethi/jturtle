@@ -80,19 +80,23 @@ public class DefaultTurtle implements Turtle {
 
     double degreeInRad = Utils.degreeToRad(angleInDegree);
 
+    // distance could be negative. We need to deal with this case
     int sign = distance >= 0 ? 1 : -1;
 
     // step of one unit in the direction, adjusted by direction
     Vector v = new Vector(Math.sin(degreeInRad), Math.cos(degreeInRad)).times(sign);
 
-    for (int i = 0; i < Math.abs(distance); i++) {
-        this.currentPosition = this.currentPosition.plus(v);
-        publish(listener -> listener.positionChanged());
 
+    double distanceWalked = 0;
+    while (distanceWalked < Math.abs(distance)) {
+      double stepLength = Math.min(Math.abs(distance) - distanceWalked, 1.0);
+      this.currentPosition = this.currentPosition.plus(v.times(stepLength));
+      distanceWalked += 1.0;
     }
-    double remainingDistance =  Math.abs(distance - Math.floor(distance));
-    this.currentPosition = this.currentPosition.plus(v.times(remainingDistance));
+    publish(listener -> listener.positionChanged());
+
   }
+
 
   @Override
   public void goTo(Point point) {
