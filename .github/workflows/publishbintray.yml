@@ -16,7 +16,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Publish to bintray
-        run: gradle publish
+        run: gradle bintrayUpload
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
