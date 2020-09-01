@@ -106,8 +106,11 @@ public class ImageTurtleView implements TurtleView, TurtleEventListener {
 
   @Override
   public void clear() {
-    this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-    this.graphics = image.createGraphics();
+    // just draw a white rectangle over the full image
+    this.graphics.setColor(Color.WHITE);
+    this.graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+    // set graphics back to use the color configured in the turtle.
+    this.graphics.setColor(turtle.getPenColor());
   }
 
   @Override
@@ -173,11 +176,10 @@ public class ImageTurtleView implements TurtleView, TurtleEventListener {
   private void initialize() {
     this.image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     this.graphics = image.createGraphics();
+
     graphics.setStroke(new BasicStroke(turtle.getPenSize()));
 
-    // set the background to white
-    this.graphics.setColor(turtle.getPenColor());
-    this.graphics.fillRect(0, 0, WIDTH, HEIGHT);
+    clear();
   }
 
   private ScreenPoint turtleToImageCoordinate(Point point) {
