@@ -43,7 +43,7 @@ public class TurtleCommands {
   public static Color ORANGE = Color.ORANGE;
   public static Color WHITE = Color.WHITE;
 
-  public static Color color(int r, int b, int g) {
+  public static Color color(int r, int g, int b) {
     return new Color(r, g, b);
   }
 
